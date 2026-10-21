@@ -1,0 +1,25 @@
+name: Validate data
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON and sha256
+        run: |
+          python3 -m json.tool macrociv_data.json >/dev/null
+          python3 -m json.tool version.json >/dev/null
+          expected=$(python3 -c 'import json; print(json.load(open("version.json"))["sha256"])')
+          actual=$(sha256sum macrociv_data.json | awk '{print $1}')
+          if [ "$expected" != "$actual" ]; then
+            echo "sha256 mismatch: version.json has $expected, macrociv_data.json is $actual"
+            exit 1
+          fi
+          echo "sha256 matches $actual"
