@@ -8,3 +8,5 @@ The app downloads the files below from the `main` branch. It checks the small `v
 - https://raw.githubusercontent.com/fieldnoteappstudio-dotcom/macrociv-data/main/version.json
 
 The data is updated automatically each week as elections happen.
+
+Privacy policy: [HTML](privacy-policy.html) · [Markdown](privacy-policy.md)
